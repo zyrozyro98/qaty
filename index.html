@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قاتي - منصة بيع وشراء وتوصيل القات</title>
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-dark: #1B5E20;
+            --primary-light: #4CAF50;
+            --secondary: #FFC107;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #F5F5F5;
+            --white: #FFFFFF;
+            --border: #E0E0E0;
+            --error: #D32F2F;
+            --success: #388E3C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin: 0 1rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+            background: rgba(46, 125, 50, 0.1);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 3rem 0;
+        }
+
+        .products-filter {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            background: var(--border);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .product-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            gap: 1rem;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--border);
+            border-radius: 4px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>🌿</i>
+                    <span>قات</span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#sellers">البائعون</a></li>
+                    <li><a href="#drivers">السائقون</a></li>
+                    <li><a href="#about">عن التطبيق</a></li>
+                </ul>
+                
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="cartBtn">
+                        🛒 السلة
+                    </button>
+                    <button class="btn btn-primary" id="loginBtn">
+                        تسجيل الدخول
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>أفضل أنواع القات الطازج</h1>
+                    <p>توصيل سريع إلى باب منزلك من أفضل المزارعين والموردين</p>
+                    <button class="btn btn-primary" style="background: var(--secondary); color: var(--text);">
+                        ابدأ التسوق الآن
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">الفئات</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">⭐</div>
+                        <h3>قات ممتاز</h3>
+                        <p>أجود الأنواع من أفضل المزارع</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">👍</div>
+                        <h3>قات جيد</h3>
+                        <p>أنواع متوسطة الجودة بسعر معقول</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🌱</div>
+                        <h3>قات بدون سموم</h3>
+                        <p>قات خالي من المبيدات</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🚀</div>
+                        <h3>توصيل فوري</h3>
+                        <p>توصيل خلال ساعة من الطلب</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products" id="products">
+            <div class="container">
+                <h2 class="section-title">المنتجات</h2>
+                
+                <div class="products-filter">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="category">الفئة</label>
+                            <select id="category">
+                                <option value="">جميع الفئات</option>
+                                <option value="premium">ممتاز</option>
+                                <option value="good">جيد</option>
+                                <option value="organic">بدون سموم</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="price">السعر</label>
+                            <select id="price">
+                                <option value="">جميع الأسعار</option>
+                                <option value="0-2000">حتى 2000 ريال</option>
+                                <option value="2000-4000">2000 - 4000 ريال</option>
+                                <option value="4000+">أكثر من 4000 ريال</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="location">الموقع</label>
+                            <select id="location">
+                                <option value="">جميع المناطق</option>
+                                <option value="Haddah">حدة</option>
+                                <option value="Jawlt-Amran">جولة عمران</option>
+                                <option value="Alsafya">الصافية</option>
+                                <option value="Al-30 Street">شارع الثلاثين</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">تطبيق الفلتر</button>
+                </div>
+
+                <div class="products-grid" id="productsGrid">
+                    <!-- سيتم تحميل المنتجات ديناميكياً -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>سلة التسوق</h3>
+            <button class="btn btn-sm btn-outline" id="closeCart">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- سيتم تحميل عناصر السلة ديناميكياً -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>المجموع:</span>
+                <span id="cartTotal">0 ريال</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">إتمام الطلب</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن التطبيق</h3>
+                    <p>منصة شاملة لبيع وتوصيل القات تجمع بين البائعين والمشترين وسائقي التوصيل في مكان واحد.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#sellers">البائعون</a></li>
+                        <li><a href="#drivers">السائقون</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <ul>
+                        <li>📞 771831482</li>
+                        <li>✉️ info@qat-app.com</li>
+                        <li>📍 صنعاء، اليمن</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تابعنا</h3>
+                    <ul>
+                        <li><a href="#">فيسبوك</a></li>
+                        <li><a href="#">تويتر</a></li>
+                        <li><a href="#">إنستغرام</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2025 تطبيق قاتي</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات وهمية للمنتجات
+        const products = [
+            {
+                id: 1,
+                name: "قات أرحبي",
+                description: "أجود أنواع القات الأرحبي من أفضل المزارع",
+                price: 4500,
+                category: "premium",
+                location: "Haddah",
+                image: "https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Premium+Qat",
+                seller: "مزرعة الأرحبي"
+            },
+            {
+                id: 2,
+                name: "قات صعدي نقفة",
+                description: "من أشهر مزارع صعدة بطعم مميز وجودة عالية",
+                price: 3500,
+                category: "premium", 
+                location: "Jawlt-Amran",
+                image: "https://via.placeholder.com/300x200/2196F3/FFFFFF?text=Taiz+Qat",
+                seller: "الحميدي"
+            },
+            {
+                id: 3,
+                name: "قات بدون سموم",
+                description: "قات خالي من المبيدات الكيميائية",
+                price: 5000,
+                category: "organic",
+                location: "Al-30 Street", 
+                image: "https://via.placeholder.com/300x200/8BC34A/FFFFFF?text=Organic+Qat",
+                seller: "همداني"
+            },
+            {
+                id: 4,
+                name: "قات حيوفي",
+                description: "جودة ممتازة بسعر مناسب",
+                price: 2500,
+                category: "good",
+                location: "Alsafya",
+                image: "https://via.placeholder.com/300x200/FF9800/FFFFFF?text=Regular+Qat", 
+                seller: "الحيوفي لتوريد القات"
+            },
+            {
+                id: 5,
+                name: "قات مختلط",
+                description: "مزيج من أنواع مختلفة بنكهة متوازنة",
+                price: 3000,
+                category: "good",
+                location: "Haddah",
+                image: "https://via.placeholder.com/300x200/9C27B0/FFFFFF?text=Mixed+Qat",
+                seller: "محل الوفير"
+            },
+            {
+                id: 6,
+                name: "قات فاخر خاص",
+                description: "من أندر الأنواع لمحبي القات المتميز",
+                price: 6000,
+                category: "premium",
+                location: "Jawlt Amran",
+                image: "https://via.placeholder.com/300x200/E91E63/FFFFFF?text=Luxury+Qat",
+                seller: "الفخامة لبيع أجود أنواع القات"
+            }
+        ];
+
+        // عناصر DOM
+        const cartBtn = document.getElementById('cartBtn');
+        const closeCart = document.getElementById('closeCart');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const overlay = document.getElementById('overlay');
+        const productsGrid = document.getElementById('productsGrid');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+
+        // سلة التسوق
+        let cart = [];
+
+        // تحميل المنتجات
+        function loadProducts() {
+            productsGrid.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image" style="background-image: url('${product.image}')"></div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">${product.price} ريال</div>
+                        <div class="product-actions">
+                            <button class="btn btn-sm btn-outline">تفاصيل</button>
+                            <button class="btn btn-sm btn-primary" onclick="addToCart(${product.id})">إضافة إلى السلة</button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // إضافة إلى السلة
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showCart();
+        }
+
+        // تحديث السلة
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-image" style="background-image: url('${item.image}')"></div>
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} ريال</div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                            </div>
+                            <button class="btn btn-sm btn-outline" onclick="removeFromCart(${item.id})">حذف</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `${total} ريال`;
+        }
+
+        // زيادة الكمية
+        function increaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+            }
+        }
+
+        // تقليل الكمية
+        function decreaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item && item.quantity > 1) {
+                item.quantity -= 1;
+                updateCart();
+            }
+        }
+
+        // حذف من السلة
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // عرض السلة
+        function showCart() {
+            cartSidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        // إخفاء السلة
+        function hideCart() {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // event listeners
+        cartBtn.addEventListener('click', showCart);
+        closeCart.addEventListener('click', hideCart);
+        overlay.addEventListener('click', hideCart);
+
+        // التحميل الأولي
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+        });
+    </script>
+</body>
+</html>
