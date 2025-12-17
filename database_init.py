@@ -5,7 +5,6 @@
 import os
 import sys
 import traceback
-from pathlib import Path
 
 print("🔧 بدء تهيئة قاعدة البيانات على Render...")
 print(f"📁 المسار الحالي: {os.getcwd()}")
@@ -15,14 +14,14 @@ print(f"🐍 إصدار Python: {sys.version}")
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 try:
-    from app import create_app, db
-    from app.config import Config
-    from app.models import User, Market
+    from __init__ import create_app, db
+    from models import User, Market
+    import hashlib
     
     print("✅ تم استيراد المكتبات بنجاح")
     
     # إنشاء التطبيق
-    app = create_app(Config)
+    app = create_app()
     
     with app.app_context():
         print("🔨 إنشاء الجداول...")
@@ -35,7 +34,6 @@ try:
         if not admin:
             print("👨‍💼 إنشاء حساب المدير...")
             # إنشاء حساب المدير
-            import hashlib
             admin = User(
                 username='admin',
                 password=hashlib.sha256('admin123'.encode()).hexdigest(),
@@ -74,7 +72,6 @@ try:
         
         # إنشاء مستخدمين تجريبيين
         print("👥 إنشاء المستخدمين التجريبيين...")
-        import hashlib
         
         demo_users = [
             {
@@ -146,7 +143,7 @@ try:
         print("🚚 مندوب التوصيل: driver1 / 123456")
         print("-"*30)
         print(f"\n📞 الدعم: 771831482")
-        print(f"🔑 API Key: {Config.API_KEY}")
+        print(f"🔑 API Key: rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj")
         print("="*50)
         
 except Exception as e:
