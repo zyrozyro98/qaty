@@ -19,7 +19,7 @@ class Config:
     """فئة الإعدادات الرئيسية"""
     
     # ========== الإعدادات الأساسية ==========
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'https://api.render.com/deploy/srv-d47p01e3jp1c73c5mb70?key=sdQH2xXNa_M')
     API_KEY = os.environ.get('API_KEY', 'rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj')
     
     APP_NAME = os.environ.get('APP_NAME', 'تطبيق قات')
