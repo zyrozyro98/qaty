@@ -12,7 +12,7 @@ SQLAlchemy==2.0.23
 # الأدوات المساعدة
 python-dotenv==1.0.0
 requests==2.31.0
-Pillow==10.1.0
+Pillow==9.5.0  # إصدار متوافق مع Python 3.11
 python-dateutil==2.8.2
 pyjwt==2.8.0
 
@@ -20,5 +20,5 @@ pyjwt==2.8.0
 gunicorn==21.2.0
 whitenoise==6.5.0
 
-# التطوير (اختياري)
+# التطوير
 Werkzeug==3.0.1
