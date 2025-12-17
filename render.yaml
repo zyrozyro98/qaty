@@ -1,23 +1,16 @@
 services:
   - type: web
-    name: qaty-backend
+    name: qat-backend
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --worker-class eventlet --workers 1 --bind 0.0.0.0:$PORT app:app
+    startCommand: gunicorn --bind 0.0.0.0:$PORT server:app
     envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: qaty-db
-          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.9.18
+      - key: SECRET_KEY
+        generateValue: true
       - key: JWT_SECRET_KEY
         generateValue: true
-      - key: PYTHON_VERSION
-        value: 3.11.9
       - key: PORT
         value: 5000
-
-databases:
-  - name: qaty-db
-    databaseName: qaty
-    user: qaty_user
-    plan: free
+    autoDeploy: true
