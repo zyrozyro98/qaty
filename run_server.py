@@ -9,32 +9,36 @@ from app.config import Config
 # إنشاء التطبيق
 app = create_app(Config)
 
-@app.route('/')
-def index():
-    return {
-        'success': True,
-        'message': 'مرحباً بك في تطبيق قات API',
-        'version': '1.0.0',
-        'support': '771831482'
-    }
-
-@app.route('/health')
-def health():
-    return {
-        'success': True,
-        'status': 'healthy',
-        'timestamp': '2024-01-01T00:00:00Z'
-    }
-
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('DEBUG', 'False').lower() == 'true'
     
-    print(f"🚀 تشغيل سيرفر تطبيق قات...")
+    print("\n" + "="*60)
+    print("🚀 تشغيل سيرفر تطبيق قات API")
+    print("="*60)
+    print(f"📦 التطبيق: {Config.APP_NAME} v{Config.APP_VERSION}")
     print(f"🌐 العنوان: http://0.0.0.0:{port}")
     print(f"🔧 الوضع: {'تطوير' if debug else 'إنتاج'}")
+    print(f"📊 قاعدة البيانات: {Config.SQLALCHEMY_DATABASE_URI[:30]}...")
     print(f"🔑 API Key: {Config.API_KEY}")
     print(f"📞 الدعم: {Config.SUPPORT_PHONE}")
+    print("="*60)
+    print("\n📡 نقاط النهاية المتاحة:")
+    print("-"*40)
+    print("GET  /              - الصفحة الرئيسية")
+    print("GET  /health        - فحص الصحة")
+    print("POST /api/auth/login - تسجيل الدخول")
+    print("POST /api/auth/register - تسجيل جديد")
+    print("GET  /api/products  - جلب المنتجات")
+    print("POST /api/orders    - إنشاء طلب")
+    print("-"*40)
+    print("\n👤 معلومات الدخول:")
+    print("-"*40)
+    print("المدير: admin / admin123")
+    print("البائع: seller1 / 123456")
+    print("المشتري: buyer1 / 123456")
+    print("مندوب التوصيل: driver1 / 123456")
+    print("="*60)
     
     app.run(
         host='0.0.0.0',
