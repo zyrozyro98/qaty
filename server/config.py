@@ -8,7 +8,7 @@ from datetime import timedelta
 class Config:
     """إعدادات التطبيق"""
     # الأساسية
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'https://api.render.com/deploy/srv-d47p01e3jp1c73c5mb70?key=sdQH2xXNa_M'
     API_KEY = 'rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj'
     
     # قاعدة البيانات
