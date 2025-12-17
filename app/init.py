@@ -1,7 +1,7 @@
 """
 حزمة التطبيق الرئيسية
 """
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -21,24 +21,51 @@ def create_app(config_class):
     app.config.from_object(config_class)
     
     # تهيئة التمديدات
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
     
-    # تسجيل النماذج (مهم للـ migrations)
+    # تسجيل النماذج
     from app import models
     
     # تسجيل البلوبوينتس
     from app.routes import auth, products, orders, admin
     
-    app.register_blueprint(auth.bp, url_prefix='/api/auth')
-    app.register_blueprint(products.bp, url_prefix='/api/products')
-    app.register_blueprint(orders.bp, url_prefix='/api/orders')
-    app.register_blueprint(admin.bp, url_prefix='/api/admin')
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(products.bp)
+    app.register_blueprint(orders.bp)
+    app.register_blueprint(admin.bp)
     
-    # إنشاء الجداول
+    @app.route('/')
+    def index():
+        return jsonify({
+            'success': True,
+            'message': 'مرحباً بك في API تطبيق قات',
+            'version': '1.0.0',
+            'support': '771831482',
+            'endpoints': {
+                'auth': '/api/auth',
+                'products': '/api/products',
+                'orders': '/api/orders',
+                'admin': '/api/admin'
+            }
+        })
+    
+    @app.route('/health')
+    def health():
+        return jsonify({
+            'success': True,
+            'status': 'healthy',
+            'database': 'connected' if db.session.connection() else 'disconnected'
+        })
+    
+    # إنشاء الجداول في سياق التطبيق
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+            print("✅ تم إنشاء/تأكيد الجداول")
+        except Exception as e:
+            print(f"⚠️  ملاحظة: {str(e)}")
     
     return app
