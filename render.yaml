@@ -4,7 +4,10 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --worker-class eventlet --workers 1 --bind 0.0.0.0:5000
-    envVars:
+    Pre-DeployCommand: export DATABASE_URL=postgresql://user:password@localhost/qaty
+export JWT_SECRET_KEY=your-secret-key
+python app.py
+StartCommand: python android_app.py
       - key: DATABASE_URL
         fromDatabase:
           name: qaty-db
