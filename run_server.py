@@ -3,11 +3,10 @@
 تشغيل سيرفر API
 """
 import os
-from app import create_app
-from app.config import Config
+from __init__ import create_app
 
 # إنشاء التطبيق
-app = create_app(Config)
+app = create_app()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
@@ -16,12 +15,10 @@ if __name__ == '__main__':
     print("\n" + "="*60)
     print("🚀 تشغيل سيرفر تطبيق قات API")
     print("="*60)
-    print(f"📦 التطبيق: {Config.APP_NAME} v{Config.APP_VERSION}")
     print(f"🌐 العنوان: http://0.0.0.0:{port}")
     print(f"🔧 الوضع: {'تطوير' if debug else 'إنتاج'}")
-    print(f"📊 قاعدة البيانات: {Config.SQLALCHEMY_DATABASE_URI[:30]}...")
-    print(f"🔑 API Key: {Config.API_KEY}")
-    print(f"📞 الدعم: {Config.SUPPORT_PHONE}")
+    print(f"🔑 API Key: rnd_DUomOIFZV3LldOVdqsn5eQ1TmDTj")
+    print(f"📞 الدعم: 771831482")
     print("="*60)
     print("\n📡 نقاط النهاية المتاحة:")
     print("-"*40)
